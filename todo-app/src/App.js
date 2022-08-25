@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import './App.css';
 
 import TodoTemplate from './components/TodoTemplate';
@@ -24,10 +24,48 @@ const App = () => {
     },
   ]);
 
+  const nextId = useRef(4);
+
+  const handleInsert = useCallback(
+    (text) => {
+      const todo = {
+        id: nextId.current,
+        text,
+        checked: false,
+      };
+
+      setTodos(todos.concat(todo));
+      nextId.current += 1;
+    },
+    [todos],
+  );
+
+  const handleRemove = useCallback(
+    (id) => {
+      setTodos(todos.filter((todo) => todo.id !== id));
+    },
+    [todos],
+  );
+
+  const handleToggle = useCallback(
+    (id) => {
+      setTodos(
+        todos.map((todo) =>
+          todo.id === id ? { ...todo, checked: !todo.checked } : todo,
+        ),
+      );
+    },
+    [todos],
+  );
+
   return (
     <TodoTemplate>
-      <TodoInsert />
-      <TodoList todos={todos} />
+      <TodoInsert handleInsert={handleInsert} />
+      <TodoList
+        todos={todos}
+        handleRemove={handleRemove}
+        handleToggle={handleToggle}
+      />
     </TodoTemplate>
   );
 };
