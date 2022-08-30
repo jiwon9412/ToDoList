@@ -8,7 +8,7 @@ import cn from 'classnames';
 import './TodoListItem.scss';
 
 const TodoListItem = ({ todo, handleRemove, handleToggle }) => {
-  //console.log(todo);
+  //console.log('TodoListItem');
   const { id, text, checked } = todo;
   return (
     <div className="TodoListItem">

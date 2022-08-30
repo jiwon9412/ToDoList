@@ -21,39 +21,30 @@ function createBulkTodos() {
 const App = () => {
   const [todos, setTodos] = useState(createBulkTodos);
 
-  const nextId = useRef(4);
+  const nextId = useRef(2501);
 
-  const handleInsert = useCallback(
-    (text) => {
-      const todo = {
-        id: nextId.current,
-        text,
-        checked: false,
-      };
+  const handleInsert = useCallback((text) => {
+    const todo = {
+      id: nextId.current,
+      text,
+      checked: false,
+    };
 
-      setTodos((todos) => todos.concat(todo));
-      nextId.current += 1;
-    },
-    [todos],
-  );
+    setTodos((todos) => todos.concat(todo));
+    nextId.current += 1;
+  }, []);
 
-  const handleRemove = useCallback(
-    (id) => {
-      setTodos((todos) => todos.filter((todo) => todo.id !== id));
-    },
-    [todos],
-  );
+  const handleRemove = useCallback((id) => {
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+  }, []);
 
-  const handleToggle = useCallback(
-    (id) => {
-      setTodos((todos) =>
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, checked: !todo.checked } : todo,
-        ),
-      );
-    },
-    [todos],
-  );
+  const handleToggle = useCallback((id) => {
+    setTodos((todos) =>
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo,
+      ),
+    );
+  }, []);
 
   return (
     <TodoTemplate>
